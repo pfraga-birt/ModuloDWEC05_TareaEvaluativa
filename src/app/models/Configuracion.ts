@@ -1,0 +1,16 @@
+export var config = {
+  jugador: '',
+  apellido : '',
+  rangoMax: 0,
+  intentosMax: 0,
+  numeroRandom: 0,
+  jugadorValido: false,
+  apellidoValido: false,
+  rangoValido: false,
+  intentosValido: false,
+  mostrarErrorJugador: false,
+  mostrarErrorApellido: false,
+  mostrarErrorRango: false,
+  mostrarErrorIntentos: false,
+  mensaje: '',
+};

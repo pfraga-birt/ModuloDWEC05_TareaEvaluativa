@@ -1,0 +1,109 @@
+<div id="parametros" class="caja" *ngIf="!esconderParametros">
+  <h1>Parámetros del Juego</h1>
+  <div id="config-form">
+    <label for="jugador">Nombre: </label>
+    <input
+      type="text"
+      id="jugador"
+      name="jugador"
+      required
+      (blur)="comprobacionJugador('nombre')"
+      [(ngModel)]="jugador"
+    />
+    <span
+      [ngStyle]="{ display: config.mostrarErrorJugador ? 'inline' : 'none' }"
+      class="mensajes"
+      >{{
+        config.jugadorValido ? "✅" : "El nombre no puede estar vacío"
+      }}</span
+    >
+    <br /><br />
+    <label for="apellido">Apellido: </label>
+    <input
+      type="text"
+      id="apellido"
+      name="apellido"
+      required
+      (blur)="comprobacionJugador('apellido')"
+      [(ngModel)]="apellido"
+    />
+    <span
+      [ngStyle]="{ display: config.mostrarErrorApellido ? 'inline' : 'none' }"
+      class="mensajes"
+      >{{
+        config.apellidoValido ? "✅" : "El apellido no puede estar vacío"
+      }}</span
+    >
+    <br /><br />
+    <label for="rangoMax">Rango maximo del número a adivinar: </label>
+    <input
+      type="number"
+      id="rangoMax"
+      name="rangoMax"
+      min="4"
+      placeholder="4"
+      [(ngModel)]="maxRango"
+      (blur)="comprobarParametro(4, 'rango')"
+    />
+    <span
+      [ngStyle]="{ display: config.mostrarErrorRango ? 'inline' : 'none' }"
+      class="mensajes"
+      >{{
+        config.rangoValido ? "✅" : "El rango máximo debe ser al menos 4"
+      }}</span
+    >
+    <br /><br />
+    <label for="intentosMax">Número máximo de intentos: </label>
+    <input
+      type="number"
+      id="intentosMax"
+      name="intentosMax"
+      min="1"
+      placeholder="1"
+      [(ngModel)]="maxIntentos"
+      (blur)="comprobarParametro(1, 'intentos')"
+    />
+    <span
+      [ngStyle]="{ display: config.mostrarErrorIntentos ? 'inline' : 'none' }"
+      class="mensajes"
+      >{{
+        config.intentosValido
+          ? "✅"
+          : "El número de intentos debe ser al menos 1"
+      }}</span
+    >
+    <br /><br />
+    <button
+      id="startGameBtn"
+      (click)="recogerDatos()"
+      [disabled]="!comprobarBoton()"
+      [ngStyle]="{ background: comprobarBoton() ? 'green' : 'gray' }"
+    >
+      Iniciar Juego
+    </button>
+  </div>
+</div>
+<div id="juego" class="caja" *ngIf="esconderParametros">
+  <h1>Ongi Etorri {{ this.config.jugador }} {{ this.config.apellido }}</h1>
+  <label for="numAle">Intenta adivinar el numero</label>
+  <input
+    type="number"
+    id="numAle"
+    name="numAle"
+    min="1"
+    [max]="this.config.rangoMax"
+    [(ngModel)]="numeroIntroducido"
+    (keyup.enter)="comprobarNumero()"
+  />
+  <span class="mensajes">{{ config.mensaje }}</span>
+  <br /><br />
+  <button
+    id="EnviarBtn"
+    (click)="comprobarNumero()"
+    [disabled]="terminado"
+    [ngStyle]="{ background: terminado ? 'gray' : '#007bff' }"
+  >
+    Enviar
+  </button>
+  <p>Tienes {{ this.config.intentosMax }} intentos restantes</p>
+</div>
